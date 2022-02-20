@@ -9,10 +9,9 @@ import {
 } from '../actions/user/userActionConstants';
 
 const initialState = {
-    userData: null,
-    isFetching: false,
-    isError: false,
-    error:''
+    user: null,
+    fetching: false,
+    error:false
   };
   
   const userReducer = (state = initialState, action) => {
@@ -31,7 +30,7 @@ const initialState = {
         case LOGIN_USER_FAILURE:
           return Object.assign({}, state,{
             error: true,
-            errorMsg: action.error,
+            error: action.error,
             fetching: false
           });
 
