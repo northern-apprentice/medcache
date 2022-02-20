@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {BASE_URL} from '../../config/config';
+import {BASE_API_URL} from '../../config/config';
 import {
     LOGIN_USER_BEGIN,
     LOGIN_USER_FAILURE,
@@ -9,17 +9,20 @@ import {
     LOGOUT_USER_FAILURE
 } from './userActionConstants';
 
-console.log(BASE_URL);
-console.log(LOGIN_USER_BEGIN);
-console.log(LOGIN_USER_SUCCESS);
+
 
 const user_login_begin = () => {
+  console.log("login begin");
+  console.log(BASE_API_URL);
+  console.log(LOGIN_USER_BEGIN);
+  console.log(LOGIN_USER_SUCCESS);
   return {
     type: LOGIN_USER_BEGIN
   };
 };
 
 const user_login_success = (payload) => {
+  console.log("login success");
   return {
     type: LOGIN_USER_SUCCESS,
     payload: payload
@@ -37,10 +40,10 @@ const user_login_failure = (err) => {
 
 
 export const login = (data, header, navigation) => {
-  
+  console.log(data);
   return dispatch => {
     dispatch(user_login_begin());
-    axios.post(BASE_URL + "login",data, header)
+    axios.post(BASE_API_URL + "login",data, header)
       .then((res) => {
         if (res.data.valid){
           dispatch(user_login_success(res.data));

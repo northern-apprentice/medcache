@@ -14,7 +14,7 @@ export default function Login({ navigation }) {
     const [emailError, setEmailError] = useState("");
     const [passwordError, setPasswordError] = useState("");
     const [error, setError] = useState(false);
-    const dispatch = useDispatch()
+    const dispatchLogin = useDispatch()
 
 
 
@@ -58,7 +58,7 @@ export default function Login({ navigation }) {
             email: email,
             password: password
         }
-       dispatch(login(data, headers, navigation));
+       dispatchLogin(login(data, headers, navigation));
     }
 
     return (
