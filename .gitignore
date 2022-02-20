@@ -3,3 +3,5 @@ node_modules
 route.rest
 API/routes/route.rest
 
+API/routes/route.rest
+*.rest
