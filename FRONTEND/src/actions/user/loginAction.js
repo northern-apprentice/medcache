@@ -12,10 +12,6 @@ import {
 
 
 const user_login_begin = () => {
-  console.log("login begin");
-  console.log(BASE_API_URL);
-  console.log(LOGIN_USER_BEGIN);
-  console.log(LOGIN_USER_SUCCESS);
   return {
     type: LOGIN_USER_BEGIN
   };
@@ -43,8 +39,12 @@ export const login = (data, header, navigation) => {
   console.log(data);
   return dispatch => {
     dispatch(user_login_begin());
-    axios.post(BASE_API_URL + "login",data, header)
+    console.log(BASE_API_URL);
+    console.log(header);
+    axios.post(BASE_API_URL + "users/login",data, header)
       .then((res) => {
+        
+        console.log(res);
         if (res.data.valid){
           dispatch(user_login_success(res.data));
           navigation.navigate('Home');
@@ -54,6 +54,8 @@ export const login = (data, header, navigation) => {
         }
       })
       .catch((err) => {
+        console.log("post error");
+        console.log(err);
         dispatch(user_login_failure(err));
       });
   };
