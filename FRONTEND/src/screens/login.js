@@ -51,14 +51,14 @@ export default function Login({ navigation }) {
     const sendLoginRequest = () => {
         console.log("sending login request");
         const headers = {
-            "Content-Type": "application/json"
+            'Content-Type': 'application/json'
         }
 
         const data = {
             email: email,
             password: password
         }
-       dispatchLogin(login(data, headers, navigation));
+        dispatchLogin(login(data, headers, navigation));
     }
 
     return (
