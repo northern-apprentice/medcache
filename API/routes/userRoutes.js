@@ -1,6 +1,7 @@
 const express = require('express')
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+require('dotenv').config()
 const router = express.Router()
 const User = require('../models/user')
 
@@ -84,6 +85,7 @@ router.post('/register', async (req, res) => {
 
 async function getUser(req, res, next) {
   let user
+  console.log(process.env.SECRET_KEY);
   try {
     user = await User.findOne({email: req.body.email})
     if (user == null) {
@@ -101,7 +103,7 @@ async function getUser(req, res, next) {
       res.status(200).json({
         payload: {
           user: user.email,
-          token: 'token',
+          token: await(generateAccessToken(user.email)),
           success: true,
           message: ""
         }
@@ -129,6 +131,29 @@ async function getUser(req, res, next) {
   }
 
   next()
+}
+
+
+function generateAccessToken(username) {
+  return jwt.sign({user:username}, process.env.SECRET_KEY, { expiresIn: '1600s' });
+}
+
+
+function authenticateToken(req, res, next) {
+  const authHeader = req.headers['authorization']
+  const token = authHeader && authHeader.split(' ')[1]
+
+  if (token == null) return res.sendStatus(401)
+
+  jwt.verify(token, process.env.TOKEN_SECRET, (err, user) => {
+    console.log(err)
+
+    if (err) return res.sendStatus(403)
+
+    req.user = user
+
+    next()
+  })
 }
 
 module.exports = router
